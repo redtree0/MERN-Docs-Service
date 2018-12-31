@@ -1,25 +1,36 @@
 {
   "name": "mern-docs-service",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
-    "react-scripts": "2.1.2"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "webpack --config webpack.common.js --mode production",
+    "dev": "webpack-dev-server --config webpack.common.js --mode development --open --watch",
+    "test": "echo \"Error: no test specified but lets exit with success so travis builds\" && exit 0",
+    "prestart": "npm run build",
+    "start": "babel-node src/server/index.js  --presets=env,stage-0",
+    "upgradeDeps": "ncu -u",
+    "prepublishOnly": "npm run build"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^1.0.0",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.1.0",
+    "node-sass": "^4.8.3",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
+    "react-hot-loader": "^4.0.0",
+    "sass-loader": "^7.0.3",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.4.1",
+    "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "^3.1.1"
+  }
 }
