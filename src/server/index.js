@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import { SUCCESS } from "../common/Events";
 import SocketIO from 'socket.io';
 import http from 'http';
+import index from './routes/index';
 
 global.path = path;
 global.dotenv = dotenv;
@@ -29,7 +30,7 @@ app.post('/login', (req, res) => {
     res.json({ msg : SUCCESS  });
 });
 
-
+app.use('/', index );
 
 
 
