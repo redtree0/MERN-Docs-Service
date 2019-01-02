@@ -34,13 +34,13 @@ const config = {
 return  post(url, formData,config)
   }
 render() {
-return (
-<form onSubmit={this.onFormSubmit}>
-<h1>File Upload</h1>
-<input type="file" onChange={this.onChange} name="uploadFile"/>
-<button type="submit">Upload</button>
-</form>
-   )
-  }
+    return (
+        <form onSubmit={this.onFormSubmit}>
+            <h1>File Upload</h1>
+            <input type="file" onChange={this.onChange} name="uploadFile"/>
+            <button type="submit">Upload</button>
+        </form>
+    )
+    }
 }
 export default SimpleReactFileUpload

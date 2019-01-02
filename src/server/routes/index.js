@@ -30,7 +30,7 @@ module.exports = (function () {
         console.log(sampleFile);
         console.log(ROOT_PATH);
         console.log(path.join(ROOT_PATH, sampleFile.name));
-        
+
         // Use the mv() method to place the file somewhere on your server
         sampleFile.mv(path.join(ROOT_PATH, sampleFile.name), function(err) {
           if (err)
@@ -39,5 +39,8 @@ module.exports = (function () {
           res.send('File uploaded!');
         });
     });
+
+    
+
     return routes;
 })();

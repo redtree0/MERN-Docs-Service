@@ -26,6 +26,8 @@
     "bootstrap": "^4.2.1",
     "chromedriver": "^2.45.0",
     "css-loader": "^1.0.0",
+    "decompress": "^4.2.0",
+    "decompress-tar": "^4.1.1",
     "directory-tree": "^2.2.1",
     "dotenv": "^6.0.0",
     "env2": "^2.2.2",
