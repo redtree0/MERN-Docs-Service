@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Alert } from 'reactstrap';
 import  LoginPanel   from './LoginPanel.jsx';
+import MainPanel from './MainPanel.jsx';
 // import axios from 'axios';
 
 class HomePanel extends Component {
@@ -39,9 +40,7 @@ class HomePanel extends Component {
             return <LoginPanel onSuccess={ this.onLogin.bind(this) }/>
         }
         return (
-            <Alert color="primary">
-            test
-            </Alert>
+			<MainPanel />
         )
 	}
 }
