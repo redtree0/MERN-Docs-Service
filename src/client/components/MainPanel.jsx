@@ -6,6 +6,7 @@ import { InputGroup, InputGroupAddon, InputGroupText, Input, Alert } from 'react
 import FileUploadPanel from './FileUploadPanel.jsx';
 import FileTreePanel from './FileTreePanel.jsx';
 import NavPanel from './NavPanel.jsx';
+import FileEditorPanel from './FileEditorPanel.jsx';
 // import NoMatch from './NoMatch.jsx';
 
 class MainPanel extends Component {
@@ -31,6 +32,7 @@ class MainPanel extends Component {
             {/* <NavPanel></NavPanel> */}
             <FileTreePanel></FileTreePanel>
             <FileUploadPanel></FileUploadPanel>
+            <FileEditorPanel></FileEditorPanel>
             </div>
             
           );
