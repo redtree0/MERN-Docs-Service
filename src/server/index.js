@@ -2,10 +2,12 @@ import express from 'express';
 import utils from "./helpers/utils";
 import path from "path";
 import dotenv from "dotenv";
-import { SUCCESS } from "../common/Events";
 import SocketIO from 'socket.io';
 import http from 'http';
+import fileUpload from 'express-fileupload';
+
 import index from './routes/index';
+import { SUCCESS } from "../common/Events";
 
 global.path = path;
 global.dotenv = dotenv;
@@ -17,6 +19,7 @@ let port = process.env.port || 8080 ;
 
 app.use(express.json()) // bodyparser;
 app.use(express.static(path.resolve(process.cwd(), 'public')))
+app.use(fileUpload());
 
 app.get('/api', (req, res) => {
     

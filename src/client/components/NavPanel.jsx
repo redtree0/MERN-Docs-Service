@@ -7,7 +7,7 @@ import {
   withRouter
 } from "react-router-dom";
 import ChatPanel from './ChatPanel.jsx';
-import FilePanel from './FilePanel.jsx';
+import FilePanel from './FileUploadPanel.jsx';
 
 function AuthExample() {
   return (

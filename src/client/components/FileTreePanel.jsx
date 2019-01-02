@@ -43,10 +43,15 @@ class FilePanel extends React.Component {
     }
     render(){
         return (
-            <Treebeard
-                data={this.state.data}
-                onToggle={this.onToggle}
-            />
+            <div>
+
+                <Treebeard
+                    data={this.state.data}
+                    onToggle={this.onToggle}
+                />
+
+            </div>
+
         );
     }
 }

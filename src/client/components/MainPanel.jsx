@@ -3,7 +3,8 @@ import { Router, Route, hashHistory } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
 import { InputGroup, InputGroupAddon, InputGroupText, Input, Alert } from 'reactstrap';
 // import ChatPanel from './ChatPanel.jsx';
-import FilePanel from './FilePanel.jsx';
+import FileUploadPanel from './FileUploadPanel.jsx';
+import FileTreePanel from './FileTreePanel.jsx';
 import NavPanel from './NavPanel.jsx';
 // import NoMatch from './NoMatch.jsx';
 
@@ -28,7 +29,8 @@ class MainPanel extends Component {
 
             <Alert>test </Alert>
             {/* <NavPanel></NavPanel> */}
-            <FilePanel></FilePanel>
+            <FileTreePanel></FileTreePanel>
+            <FileUploadPanel></FileUploadPanel>
             </div>
             
           );
