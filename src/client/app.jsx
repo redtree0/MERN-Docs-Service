@@ -1,6 +1,7 @@
 // Node.JS
 import React from "react";
 import ReactDOM from "react-dom";
+
   
 class App extends React.Component {
 
@@ -15,6 +16,7 @@ class App extends React.Component {
     return (
       <div>
         <p>React reporting in!</p>
+        
       </div>
     );
   }
@@ -22,7 +24,6 @@ class App extends React.Component {
 
 export default App;
 
-ReactDOM.render(<App />, document.getElementById("app"));
+// ReactDOM.render(<App />, document.getElementById("app"));
 
-
-module.hot.accept();
+// module.hot.accept();

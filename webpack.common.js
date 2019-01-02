@@ -19,6 +19,7 @@ module.exports = {
     entry: [
       'babel-polyfill',
       'react-hot-loader/patch',
+      'Reactstrap',
       paths.entryClient
     ],
     output: {
@@ -68,8 +69,8 @@ module.exports = {
     ],
     performance: {
       hints: "warning",
-      maxAssetSize: 2000000, // Bytes..
-      maxEntrypointSize: 4000000, // Bytes..
+      maxAssetSize: 2000000000, // Bytes..
+      maxEntrypointSize: 4000000000, // Bytes..
       assetFilter: function(filename) {
           // If you would like to, you can exclude file types, names, etc here by providing an expression.
           return true;
