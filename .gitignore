@@ -21,3 +21,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# for nightwatch
+selenium-server.log
+tests/reports/*
+tests/results/*

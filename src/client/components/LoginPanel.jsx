@@ -60,7 +60,7 @@ requestPWChange(event){
       <Form>
         <FormGroup>
           <Label for="loginId">ID</Label>
-          <Input type="text" name="id" placeholder="userID" onChange= { this.requestIDChange }/>
+          <Input type="text" name="userId" placeholder="userId" onChange= { this.requestIDChange }/>
         </FormGroup>
         <FormGroup>
           <Label for="loginPassword">Password</Label>
