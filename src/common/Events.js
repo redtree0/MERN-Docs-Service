@@ -2,4 +2,8 @@ module.exports = {
     SUCCESS : "SUCCESS",
     FAIL : "FAIL",
     LOGOUT : "LOGOUT",
+    CREATE_ROOM : "CREATE_ROOM",
+    JOIN_ROOM : "CREATE_ROOM",
+    SEND_MESSAGE : "SEND_MESSAGE",
+    CHATLOG : "CHATLOG",
 }

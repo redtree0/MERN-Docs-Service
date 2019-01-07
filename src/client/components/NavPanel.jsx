@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -6,114 +6,97 @@ import {
   Redirect,
   withRouter
 } from "react-router-dom";
-import ChatPanel from './ChatPanel.jsx';
-import FilePanel from './FileUploadPanel.jsx';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem } from 'reactstrap';
 
-function AuthExample() {
+function NavPanel(){
   return (
-    <Router>
-      <div>
-        <AuthButton />
-        <ul>
-          <li>
-            <Link name="page-chat" to="/chat">Chat Page</Link>
-          </li>
-          <li>
-            <Link to="/public">Public Page</Link>
-          </li>
-          <li>
-            <Link to="/protected">Protected Page</Link>
-          </li>
-        </ul>
-        <Route path="/chat" component={ChatPanel} />
-        <Route path="/public" component={Public} />
-        <Route path="/login" component={Login} />
-        <PrivateRoute path="/protected" component={Protected} />
-      </div>
-    </Router>
-  );
+    <Navbar color="light" light expand="md">
+  <NavbarBrand href="/">MERN-Docs-Service</NavbarBrand>
+    <Nav className="ml-auto" navbar>
+      <NavItem>
+        <NavLink to="{Link}" href="/">Components</NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink to="{Link}" href="/about">About</NavLink>
+      </NavItem>
+      <UncontrolledDropdown nav inNavbar>
+        <DropdownToggle nav caret>
+          User
+        </DropdownToggle>
+        <DropdownMenu right>
+          <DropdownItem>
+            My Profile
+          </DropdownItem>
+          <DropdownItem divider />
+          <DropdownItem>
+            Logout
+          </DropdownItem>
+        </DropdownMenu>
+      </UncontrolledDropdown>
+    </Nav>
+  </Navbar>
+  )
 }
+  
+// class NavPanel extends Component{
+//   constructor(props) {
+//     super(props);
 
-const fakeAuth = {
-  isAuthenticated: false,
-  authenticate(cb) {
-    this.isAuthenticated = true;
-    setTimeout(cb, 100); // fake async
-  },
-  signout(cb) {
-    this.isAuthenticated = false;
-    setTimeout(cb, 100);
-  }
-};
+//     this.toggle = this.toggle.bind(this);
+//     this.state = {
+//       isOpen: false
+//     };
+//   }
+//   toggle() {
+//     this.setState({
+//       isOpen: !this.state.isOpen
+//     });
+//   }
 
-const AuthButton = withRouter(
-  ({ history }) =>
-    fakeAuth.isAuthenticated ? (
-      <p>
-        Welcome!{" "}
-        <button
-          onClick={() => {
-            fakeAuth.signout(() => history.push("/"));
-          }}
-        >
-          Sign out
-        </button>
-      </p>
-    ) : (
-      <p>You are not logged in.</p>
-    )
-);
+//   render(){
+//     <div>
 
-function PrivateRoute({ component: Component, ...rest }) {
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        fakeAuth.isAuthenticated ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: props.location }
-            }}
-          />
-        )
-      }
-    />
-  );
-}
+//     <Navbar color="light" light expand="md">
+//     <NavbarToggler onClick={this.toggle} />
+//     <NavbarBrand href="/">MERN-Docs-Service</NavbarBrand>
+//       <Nav className="ml-auto" navbar>
+//         <NavItem>
+//           <NavLink to="{Link}" href="/">Components</NavLink>
+//         </NavItem>
+//         <NavItem>
+//           <NavLink to="{Link}" href="/about">About</NavLink>
+//         </NavItem>
+//         <UncontrolledDropdown nav inNavbar>
+//           <DropdownToggle nav caret>
+//             User
+//           </DropdownToggle>
+//           <DropdownMenu right>
+//             <DropdownItem>
+//               My Profile
+//             </DropdownItem>
+//             <DropdownItem divider />
+//             <DropdownItem>
+//               Logout
+//             </DropdownItem>
+//           </DropdownMenu>
+//         </UncontrolledDropdown>
+//       </Nav>
+//     </Navbar>
+//     </div>
 
-function Public() {
-  return <h3>Public</h3>;
-}
+//   }
 
-function Protected() {
-  return <h3>Protected</h3>;
-}
+// }
 
-class Login extends React.Component {
-  state = { redirectToReferrer: false };
-
-  login = () => {
-    fakeAuth.authenticate(() => {
-      this.setState({ redirectToReferrer: true });
-    });
-  };
-
-  render() {
-    let { from } = this.props.location.state || { from: { pathname: "/" } };
-    let { redirectToReferrer } = this.state;
-
-    if (redirectToReferrer) return <Redirect to={from} />;
-
-    return (
-      <div>
-        <p>You must log in to view the page at {from.pathname}</p>
-        <button onClick={this.login}>Log in</button>
-      </div>
-    );
-  }
-}
-
-export default AuthExample;
+export default NavPanel;
