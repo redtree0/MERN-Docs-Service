@@ -6,4 +6,5 @@ module.exports = {
     JOIN_ROOM : "CREATE_ROOM",
     SEND_MESSAGE : "SEND_MESSAGE",
     CHATLOG : "CHATLOG",
+    VERIFY : "VERIFY",
 }

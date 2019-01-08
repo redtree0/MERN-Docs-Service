@@ -1,47 +1,9 @@
 import React, { Component } from 'react';
 
-// class MainPanel extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             response: false,
-//             endpoint: "http://localhost:8080"
-//         };
-//     }
-//     componentDidMount() {
-//     //     initSocket();
-//     // }
-
-//     // initSocket = ()=>{
-//         const { endpoint } = this.state;
-//         const socket = socketIOClient(endpoint);
-    
-//         socket.on('connect', (data)=>{
-//             console.log("Connected");
-//             this.setState({ response: data })
-//             socket.emit("SEND_MESSAGE", "dat");
-//         })
-        
-//     }
-
-      
-//     render() {
-//         return (
-//             <div>
-
-//             <Alert>test </Alert>
-//             {/* <NavPanel></NavPanel> */}
-//             <FileTreePanel></FileTreePanel>
-//             <FileUploadPanel></FileUploadPanel>
-//             <FileEditorPanel></FileEditorPanel>
-//             </div>
-            
-//           );
-//     }
-// }
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import ChatPanel from './ChatPanel.jsx';
+import ChatPanel from './chat/ChatPanel.jsx';
+import LoginForm from './LoginForm.jsx';
 import FileUploadPanel from './FileUploadPanel.jsx';
 import FileTreePanel from './FileTreePanel.jsx';
 import NavPanel from './NavPanel.jsx';
@@ -58,14 +20,12 @@ class MainPanel extends Component {
             response: false,
             endpoint: "http://localhost:8080",
             socket : null,
-            socket_id : null,
-            once : true,
+            user : null,
             chatlog : []
         };
         
-       
-        
     }
+
     componentDidMount() {
 
         const { endpoint } = this.state;
@@ -80,36 +40,51 @@ class MainPanel extends Component {
         
     }
 
+    setUser = (user)=>{
+		// const { socket } = this.state
+		// socket.emit(USER_CONNECTED, user);
+		this.setState({user})
+	}
 
     render(){
         const { socket } = this.state;
+        const { user } = this.state;
+
         return (
             // <Router>
             <div>
+                {
+                !user ?
+                <div><LoginForm socket={socket} setUser={this.setUser} ></LoginForm></div>
+                :
+                <div>
+
+                    <NavPanel />
+                    
+                    <hr />
+
+                    <div style={{ display: "flex" }}>
+
+                        <SidebarPanel />
+
+                        <Router>
+                            <div style={{ flex: 1, padding: "10px" }}>
+                            <h2>{ this.state.chatlog }</h2>
+                            <h2>{ this.state.socket_id }</h2>
+                            <h2>{ this.state.response }</h2>
+                            <h2>{ this.state.endpoint }</h2>
+                            <Route exact path="/home" render={(props) => <ChatPanel {...props} socket={socket} user={ user } /> }/>
+                            {/* <Route exact path="/home" component={ChatPanel} socket={socket} /> */}
+                            <Route path="/about" component={About} />
+                            </div>
+                        </Router>
+
+                    </div>
                 
-                <NavPanel />
-                
-                <hr />
-
-                <div style={{ display: "flex" }}>
-
-                    <SidebarPanel />
-
-                    <Router>
-                        <div style={{ flex: 1, padding: "10px" }}>
-                        <h2>{ this.state.chatlog }</h2>
-                        <h2>{ this.state.socket_id }</h2>
-                        <h2>{ this.state.response }</h2>
-                        <h2>{ this.state.endpoint }</h2>
-                        <Route exact path="/home" render={(props) => <ChatPanel {...props} socket={socket} /> }/>
-                        {/* <Route exact path="/home" component={ChatPanel} socket={socket} /> */}
-                        <Route path="/about" component={About} />
-                        </div>
-                    </Router>
-
                 </div>
-            
+                }
             </div>
+
         );
     }
 }
