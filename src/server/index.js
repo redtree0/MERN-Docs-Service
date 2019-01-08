@@ -50,8 +50,12 @@ let io = new SocketIO(server);
 
 io.set('origins', '*:*');
 
+Map.prototype.pushByKey = function(key, value){
+    this.set( this.get( key ),this.get( key ).push(value) );
+}
+
 const users = new Map();
-// const rooms = new Map();
+const rooms = new Map();
 const chatlogs = [];
 
 
@@ -79,14 +83,20 @@ io.on('connection', (socket) => {
   });
 
   socket.on('send:message', function(data, callback){
-    console.log(data)
+    // console.log(data)
     const { name } = data;
     const { to } = data;
 
     if(users.get( name )){
         console.log( users.get( name ));
-        users.set( users.get( name ), users.get( name ).push(data) );
+        // users.set( users.get( name ), users.get( name ).push(data) );
+        users.pushByKey(name, data);
         console.log( users.get( name ));
+
+        // let message = (users.get( name ).concat(users.get( to )));
+        // let sortedmessage = message.sort(function(a,b) {return new Date(b.timestamp) - new Date(a.timestamp) }); ;
+        // io.emit('chatlog', sortedmessage ) ;
+        // io.in(to).emit('chatlog', sortedmessage ) ;
 
         // io.emit('chatlog', users.get( name ) ) ;
         // if(data){
@@ -94,10 +104,27 @@ io.on('connection', (socket) => {
         // io.in(to).emit('chatlog', users.get( name ) ) ;
         // }
         // io.emit('receive:message', users.get( data.name )) ;
-        let message = (users.get( name ).concat(users.get( to )));
-        let sortedmessage = message.sort(function(a,b) {return new Date(b.timestamp) - new Date(a.timestamp) }); ;
-        io.emit('chatlog', sortedmessage ) ;
-        io.in(to).emit('chatlog', sortedmessage ) ;
+        let key = getKey(name, to);
+
+        function getKey(first, second){
+            if(rooms.get(first +":"+ second)){
+                return first + ":" + second;
+            } else if (rooms.get(second +":"+ first)){
+                return second + ":" + first;
+            } else {
+                rooms.set((first + ":" + second), []); 
+                return first + ":" + second;;
+            }
+        }
+        if(rooms.get(key)){
+            // rooms.get((name +":"+ to), new Array());
+            rooms.pushByKey(key, data);
+            let message = rooms.get(key);
+            let sortedmessage = message.sort(function(a,b) {return new Date(a.timestamp) - new Date(b.timestamp) }); ;
+            io.emit('chatlog', sortedmessage );
+            io.in(to).emit('chatlog', sortedmessage );
+        } 
+        
     }
 
   })

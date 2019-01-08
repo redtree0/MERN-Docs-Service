@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import {  Input, Container, Row, Col, Card, CardTitle, CardBody, CardFooter,  Button, Text } from 'reactstrap';
+import {  Input, Container, Row, Col, Card, CardTitle, CardBody, CardText, CardFooter,  Button, Text, Alert } from 'reactstrap';
 import socketIOClient from 'socket.io-client'
 function makeid() {
     var text = "";
@@ -26,57 +26,23 @@ class ChatPanel extends Component {
             chats : [],
             name : EMPTY,
             to : EMPTY,
+            chatlog : []
         }; 
         this.onChangeUsername = this.onChangeUsername.bind(this);
         
         this.testSendEvent = this.testSendEvent.bind(this);
         this.testJoinEvent = this.testJoinEvent.bind(this);
         this.testCreateRoomEvent = this.testCreateRoomEvent.bind(this);
+        // this.createChat = this.createChat.bind(this);
     }
 
     componentDidMount() {
-        // const { socket } = this.props;
-       
-        // if(this.state.socket != EMPTY){
-        //     this.state.socket.on('chatlog', (data)=>{
-        //         // chatlog
-        //         this.setState({chatlog : data});
-        //     });
-        // }
-        // const { endpoint } = this.state;
-        // const socket = socketIOClient(endpoint);
-        // // const { endpoint } = this.state;
-        // // const socket = socketIOClient(endpoint);
-        // if(this.state.socket === EMPTY) {
-        //     socket.on('connect', (data)=>{
-            
-        //         this.setState({socket : socket});
-        //         console.log("Connected");
-                
-        //     });
-        // }
         
-        // if(this.state.socket) {
-        //     this.state.socket.on('chatlog', (data)=>{
-        //         // chatlog
-        //         console.log(data);
-        //         this.setState({chatlog : JSON.stringify(data)});
-        //     });
-        // }
-        
-
     }
 
     testSendEvent(e){
         e.preventDefault();
-        // const { endpoint } = this.state;
-        // const socket = socketIOClient(endpoint);
-        // if(this.state.name === EMPTY && this.state.to === EMPTY){
-        //    return ; 
-        // }
-        // if(this.state.socket === EMPTY ){
-        //     return ;
-        // }
+       
         const { name } = this.state;
         const { to } = this.state;
         const { socket } = this.props;
@@ -96,7 +62,8 @@ class ChatPanel extends Component {
             socket.on('chatlog', (data)=>{
                 // chatlog
                 console.log(data);
-                this.setState({chatlog : JSON.stringify(data)});
+                this.setState({chatlog : (data)});
+                // this.createChat(data);
             });
 
         }
@@ -164,12 +131,24 @@ class ChatPanel extends Component {
                 <Button onClick= { this.testSendEvent }>test Send Event</Button>
             </Row> 
             <Row>
+                <Col>Message View</Col>
+            </Row>
+            <div>
+                 { (this.state.chatlog.length != 0) && ( this.state.chatlog.map((chat, i) => {
+                        
+                        return (<ChatContainer from={chat.from}
+                                            to={chat.to}
+                                              message={chat.message} time={chat.time} username={this.state.name} />);
+
+                    }) )}
+            </div>
+            <Row>
+                <Col>Data Log</Col>
                 <Col>
-                    <h2> { this.state.chatlog }</h2>
-                    {/* <Text>{ this.state.chatlog }</Text> */}
+                    <h2> { (this.state.chatlog.length != 0) && JSON.stringify(this.state.chatlog) }</h2>
                 </Col>
             </Row>
-           
+            
         </Container>
           );
     }
@@ -193,4 +172,32 @@ function makeid() {
 
 const getTime = (date)=>{
 	return `${date.getHours()}:${("0"+date.getMinutes()).slice(-2)}:${("0"+date.getSeconds()).slice(-2)}`
+}
+
+class ChatContainer extends React.Component {
+    
+    render() {
+            let background = "primary";
+            let pos = "right";
+            let test = "outline";
+            if((this.props.to === this.props.username) ) {
+                background = "light";
+                pos = "left";
+                test = "inverse";
+            }
+            return(
+                <div>
+                    <div align={ pos } >
+                        
+                        <Card body  color={ background } className={ "d-inline-flex " + test } >
+                            { ( pos === "left" ) && <div><strong>{this.props.from}</strong></div>}
+                            <CardText>{this.props.message}</CardText>
+                        </Card>
+                        <strong> { this.props.time } </strong>
+                    </div>
+                    
+                </div>
+
+            )
+        } 
 }
