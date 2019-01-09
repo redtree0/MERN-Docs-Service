@@ -45,6 +45,8 @@ class MainPanel extends Component {
     setUser = (user)=>{
 		// const { socket } = this.state
         // socket.emit(USER_CONNECTED, user);
+        console.log("set user");
+        console.log(user);
         this.setState({user});
         
         const { socket } = this.state;

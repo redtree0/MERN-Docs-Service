@@ -2,8 +2,8 @@ import express from 'express';
 import path from 'path';
 import { ROOT_PATH } from '../../config';
 
-module.exports = (function () {
-    'use strict';
+// module.exports = (function () {
+//     'use strict';
     var routes = express.Router();
 
     routes.get('/test', function (req, res) {
@@ -40,7 +40,7 @@ module.exports = (function () {
         });
     });
 
-    
+    export default routes; 
 
-    return routes;
-})();
+//     return routes;
+// })();

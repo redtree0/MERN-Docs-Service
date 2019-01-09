@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom'
 
 class LoginForm extends Component {
   constructor(props) {
@@ -10,16 +11,29 @@ class LoginForm extends Component {
     
     this.state ={
 			requestID:'',
-			requestPW:''
+      requestPW:'',
+      redirect : false
     };
     
     this.onSubmit = this.onSubmit.bind(this);
+    this.SignUp = this.SignUp.bind(this);
     this.requestIDChange = this.requestIDChange.bind(this);
 		this.requestPWChange = this.requestPWChange.bind(this);
     this.setUser = this.setUser.bind(this);
 
   }
 
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/' />
+    }
+  }
 
 	onLogout(){
 		this.setState({
@@ -39,27 +53,61 @@ class LoginForm extends Component {
     this.props.setUser(user);
   }
 
-  onSubmit(){
+  onSubmit(e){
+    e.preventDefault();
+
     var params = {
       userId : this.state.requestID,
       passwd : this.state.requestPW
     } ;
 
     console.log(params);
-    axios.post('/login', params)
+    axios.post('/authenticate', params)
+    // axios.post('/login', params)
       .then(res => {
+        if (res.status === 200) {
+          this.props.history.push('/');
+        }
+        // console.log(res);
+        // if(res.data.msg === "SUCCESS") {
+        //   this.setUser(this.state.requestID);
+        // } else {
+        //   this.setUser(null);
+        // }
         
-        console.log(res);
-        this.setUser(this.state.requestID);
       })
       .catch( err => {
         console.log(err);
       });
   }
 
+  SignUp(e){
+      e.preventDefault();
+      var params = {
+        userId : this.state.requestID,
+        passwd : this.state.requestPW
+      } ;
+
+      console.log(params);
+      axios.post('/addUser', params)
+        .then(res => {
+          if(res.data.msg === "SUCCESS") {
+
+          } else {
+
+          }
+          // console.log(res);
+          this.setRedirect();
+
+        })
+        .catch( err => {
+          console.log(err);
+        });
+  }
   render() {
     return (
-      <Form>
+      <Form onSubmit ={ this.onSubmit.bind(this) }>
+       {this.renderRedirect()}
         <FormGroup>
           <Label for="loginId">ID</Label>
           <Input type="text" name="userId" placeholder="userId" onChange= { this.requestIDChange }/>
@@ -69,7 +117,8 @@ class LoginForm extends Component {
           <Input type="password" name="password"  placeholder="password" onChange={ this.requestPWChange } />
         </FormGroup>
        
-        <Button onClick={ this.onSubmit.bind(this) } >Submit</Button>
+        <Button type="submit" >Login</Button>
+        <Button onClick={ this.SignUp.bind(this) } >Sgin up</Button>
       </Form>
     );
   }

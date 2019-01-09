@@ -7,10 +7,12 @@ import http from 'http';
 import fileUpload from 'express-fileupload';
 
 import index from './routes/index';
-import { SUCCESS, SEND_MESSAGE, CHATLOG, CREATE_ROOM } from "../common/Events";
+import user from './routes/user';
 
 import session from 'express-session';
 import mongoose from 'mongoose';
+
+import cookieParser from 'cookie-parser';
 
 global.path = path;
 global.dotenv = dotenv;
@@ -28,11 +30,12 @@ db.once('open', function(){
 
 mongoose.connect('mongodb://localhost/mern');
 
-app.use(session({
-    secret: '@#@$MYSIGN#@$#$',
-    resave: false,
-    saveUninitialized: true
-}));
+// app.use(session({
+//     secret: '@#@$MYSIGN#@$#$',
+//     resave: false,
+//     saveUninitialized: true
+// }));
+app.use(cookieParser());
 app.use(express.json()) // bodyparser;
 app.use(express.static(path.resolve(process.cwd(), 'public')))
 app.use(fileUpload());
@@ -41,13 +44,7 @@ app.get('/api', (req, res) => {
     res.send('Express to the rescue!');
 });
 
-app.post('/login', (req, res) => {
-    console.log(req.body);
-    let userId = req.body.userId;
-
-    res.json({ msg : SUCCESS  });
-});
-
+app.use('/', user );
 app.use('/', index );
 
 app.get('*', (req,res) =>{
