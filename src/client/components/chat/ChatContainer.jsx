@@ -14,7 +14,7 @@ export default class ChatContainer extends Component {
                 pos = "left";
                 test = "inverse";
             } 
-            if ( (this.props.to == null)  || (this.props.to === "Others") ){
+            if ( (this.props.to == null)  || (this.props.to === "BROADCAST") ){
                 background = "success";
                 pos = "left";
                 test = "inverse";

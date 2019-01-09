@@ -11,6 +11,8 @@ import SidebarPanel from './SidebarPanel.jsx';
 import FileEditorPanel from './FileEditorPanel.jsx';
 import socketIOClient from "socket.io-client";
 
+import { VERIFY } from '../../common/Events.js';
+
 
 class MainPanel extends Component {
     
@@ -42,8 +44,13 @@ class MainPanel extends Component {
 
     setUser = (user)=>{
 		// const { socket } = this.state
-		// socket.emit(USER_CONNECTED, user);
-		this.setState({user})
+        // socket.emit(USER_CONNECTED, user);
+        this.setState({user});
+        
+        const { socket } = this.state;
+
+        socket.emit(VERIFY, user);
+
 	}
 
     render(){
@@ -58,6 +65,7 @@ class MainPanel extends Component {
                 <div><LoginForm socket={socket} setUser={this.setUser} ></LoginForm></div>
                 :
                 <div>
+                    <h2>  { user } </h2>
 
                     <NavPanel />
                     

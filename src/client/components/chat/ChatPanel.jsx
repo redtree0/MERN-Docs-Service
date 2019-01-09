@@ -57,11 +57,15 @@ class ChatPanel extends Component {
 		// socket.on(messageEvent, this.addMessageToChat(chat.id))
     }
     
-    sendMessage(message){
-
+    sendMessage(options, message){
         const { socket } = this.props;   
-        const { user }  = this.props;    
-        socket.emit(SEND_MESSAGE, user, message);
+        // const { user }  = this.props;    
+        let user = !options.to ? this.props.user : options.to;
+        socket.emit(options.msgEvent, user, message, (selfmsg)=>{
+            let chatlog=this.state.chatlog;
+            chatlog.push(selfmsg);
+            this.setState({ 'chatlog' : chatlog});
+        });
        
     }
   
@@ -78,7 +82,7 @@ class ChatPanel extends Component {
                     </Row>
                     <div>
                         {/* { JSON.stringify(this.state.chatlog) } */}
-                        { (this.state.chatlog.length != 0) && ( this.state.chatlog.map((chat, i) => {
+                        { (this.state.chatlog.length != 0) &&( this.state.chatlog.map((chat, i) => {
                                 
                                 return (<ChatContainer from={chat.from}
                                                     to={chat.to}
@@ -89,7 +93,7 @@ class ChatPanel extends Component {
                     
                 </Container>
                 <div>
-                    <Messageinput sendMessage={(message)=>{this.sendMessage(message)} }/>
+                    <Messageinput sendMessage={(options, message)=>{this.sendMessage(options, message)} }/>
                         
                 </div> 
             </div>
