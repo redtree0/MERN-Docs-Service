@@ -21,7 +21,7 @@ class MainPanel extends Component {
             socket : null,
             user : null,
         };
-        
+        this.setUser = this.setUser.bind(this);
     }
 
     componentDidMount() {
@@ -43,11 +43,11 @@ class MainPanel extends Component {
         // socket.emit(USER_CONNECTED, user);
         console.log("set user");
         console.log(user);
-        this.setState({'user' : user});
         
         const { socket } = this.state;
 
         socket.emit(VERIFY, user);
+        this.setState({user : user});
 
 	}
 
@@ -76,9 +76,9 @@ class MainPanel extends Component {
                         <Router>
                             <div style={{ flex: 1, padding: "10px" }}>
                             <h2>{ this.state.endpoint }</h2>
-                            <Route path="/home" render={(props) => <ChatPanel {...props} socket={socket} user={ user } /> }/>
+                            <Route exact path="/home" render={(props) => <ChatPanel {...props} socket={socket} user={ user } /> }/>
                             {/* <Route exact path="/home" component={ChatPanel} socket={socket} /> */}
-                            <Route exact path="/file"  render={(props) => <FilePanel {...props} socket={socket} user={ user } /> }/>
+                            <Route  path="/file"  render={(props) => <FilePanel {...props} socket={socket} user={ user } /> }/>
                             </div>
                         </Router>
 

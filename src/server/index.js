@@ -10,15 +10,19 @@ import index from './routes/index';
 import user from './routes/user';
 
 import session from 'express-session';
+import sharedsession from 'express-socket.io-session';
 import mongoose from 'mongoose';
 
 import cookieParser from 'cookie-parser';
+
 
 global.path = path;
 global.dotenv = dotenv;
 
 utils.loadENV();
 const app = express();
+const server = http.createServer(app);
+let io = module.exports.io  = new SocketIO(server);
 
 let port = process.env.port || 8080 ;
 
@@ -30,11 +34,20 @@ db.once('open', function(){
 
 mongoose.connect('mongodb://localhost/mern',  { useNewUrlParser: true });
 
-// app.use(session({
-//     secret: '@#@$MYSIGN#@$#$',
-//     resave: false,
-//     saveUninitialized: true
-// }));
+const mySession = session({
+    secret: '@#@$MYSIGN#@$#$',
+    resave: true,
+    saveUninitialized: true
+});
+
+app.use(mySession);
+
+io.use(
+	sharedsession(mySession, {
+		autoSave: true
+	})
+);
+
 app.use(cookieParser());
 app.use(express.json()) // bodyparser;
 app.use(express.static(path.resolve(process.cwd(), 'public')))
@@ -48,8 +61,8 @@ app.get('*', (req,res) =>{
     res.sendFile(path.resolve(process.cwd(), 'public/index.html'));
 });
 
-const server = http.createServer(app);
-let io = module.exports.io  = new SocketIO(server);
+
+
 
 io.set('origins', '*:*');
 

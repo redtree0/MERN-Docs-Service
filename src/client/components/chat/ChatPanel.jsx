@@ -2,15 +2,15 @@ import React, { Component, PropTypes } from 'react';
 import {  Input, Container, Row, Col, Card, CardTitle, CardBody, CardText, CardFooter,  Button, Text, Alert } from 'reactstrap';
 import ChatContainer from './ChatContainer.jsx'
 import Messageinput from '../messages/Messageinput.jsx'
-import { SEND_MESSAGE, VERIFY , CHATLOG } from '../../../common/Events.js'
+import { SEND_MESSAGE, VERIFY , CHATLOG, LOAD_MESSAGE } from '../../../common/Events.js'
 
 const EMPTY = null;
 
 class ChatPanel extends Component {
 
-    constructor(props) {
-        super(props);
-        console.log(props);
+    constructor(args) {
+        super(...args);
+        // console.log(props);
         this.state = {
             chatlog : []
         }; 
@@ -20,10 +20,18 @@ class ChatPanel extends Component {
 
     componentDidMount() {
         console.log("componentDidMount");
+        // console.log(this.props);
         const { socket } = this.props;
-        const { user } = this.props;
+        // const { user } = this.props;
         // socket.emit("RESET", this.resetChat);
-        socket.emit(VERIFY, user);
+        // socket.emit(VERIFY, user);
+        socket.emit(LOAD_MESSAGE, {},(data)=>{
+            console.log(LOAD_MESSAGE);
+            console.log(data.chatlogs);
+            let chatlogs = data.chatlogs;
+            this.initMessage(chatlogs);
+        });
+
         socket.on(CHATLOG, (data)=>{
             console.log(data);
             this.updateChatlog(data);
@@ -31,9 +39,9 @@ class ChatPanel extends Component {
         // console.log(socket);
     }
 
-    resetChat = (chat)=>{
-		return this.addChat(chat, true)
-    }
+    // resetChat = (chat)=>{
+	// 	return this.addChat(chat, true)
+    // }
     
     updateChatlog(chat){
         console.log("in update func");
@@ -43,12 +51,11 @@ class ChatPanel extends Component {
         this.setState({chatlog : newchat});
     }
 
-    addChat = (chat, reset)=>{
-		const { socket } = this.props
-		const { chats } = this.state
+    initMessage(chatlogs){
+        console.log("in initMessage func");
+        console.log(chatlogs);
 
-		const newChats = reset ? [chat] : [...chats, chat]
-	
+        this.setState({ chatlog : chatlogs});
     }
     
     sendMessage(options, message){
@@ -67,6 +74,7 @@ class ChatPanel extends Component {
 
     render() {
         const { user }  = this.props;   
+        // console.log(user);
         return (
             <div>
                 <Container>

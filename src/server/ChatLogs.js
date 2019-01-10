@@ -1,4 +1,4 @@
-
+import { BROADCAST } from '../common/Events.js' ;
 // 유저별 채팅 로그 기록 map class
 class ChatLogs {
     // class Chatlogs extends Map {
@@ -8,6 +8,9 @@ class ChatLogs {
         // return this;
     }
     
+    getChatLogs(user){
+        return this.userTochat.get(user);
+    }
     pushByKey(key, value) {
         let self = this;
         // console.log("new msg " + key);
@@ -23,17 +26,15 @@ class ChatLogs {
         }else {
             self.userTochat.set( key, new Array() );
         }
-        console.log("initKey " +  ( key ));
-        console.log(self.userTochat);
+        // console.log("initKey " +  ( key ));
+        // console.log(self.userTochat);
 
         return key;
     }
 
     newMessage(from, to, msg) {
         
-        function getTime(date){
-            return `${date.getHours()}:${("0"+date.getMinutes()).slice(-2)}:${("0"+date.getSeconds()).slice(-2)}`
-        }
+        
 
         let newmsg = {
             'from' : from ,
@@ -44,10 +45,33 @@ class ChatLogs {
         }
         
         // mongoose insert 
-
+        if( to === BROADCAST) {
+            this.pushByKey(BROADCAST, newmsg);
+        }
         this.pushByKey(from, newmsg);
 
         return newmsg; 
+    }
+
+    newBroadcast(from, to, msg){
+        let self = this;
+        let user = from;
+
+        let newmsg = {
+            'from' : from ,
+            'to' : BROADCAST,
+            'message' : msg,
+            'time' : getTime( new Date()),
+            'timestamp' : new Date()
+        }
+
+        self.userTochat.forEach( (value, key , map)=>{
+            // if (key !== user) {
+                // self.newMessage(from, to, msg);
+                self.pushByKey(key ,newmsg);
+            // }
+        });
+        return newmsg;
     }
 
     remove(user) {
@@ -55,6 +79,10 @@ class ChatLogs {
 
         self.userTochat.delete(user);
     }
+}
+
+function getTime(date){
+    return `${date.getHours()}:${("0"+date.getMinutes()).slice(-2)}:${("0"+date.getSeconds()).slice(-2)}`
 }
 
 export { ChatLogs };

@@ -10,11 +10,16 @@ let routes = express.Router();
 routes.post('/login', (req, res) => {
     console.log(req.body);
     let userId = req.body.userId;
-    User.findOne({ id: req.body.userId }, function(err, user){
+    User.findOne({ id: userId }, function(err, user){
         console.log(err);
         console.log(user);
         if(err || user === null) return res.json({ msg : FAIL  });
+        // req.session.user = {
+        //     username: userId
+        // };
         res.json({ msg : SUCCESS  });
+        // res.redirect('/');
+
     });
     
 });
@@ -33,18 +38,26 @@ routes.post('/addUser', (req, res) => {
             //document exists });
         }else {
             user.save((err)=>{
-                // if(err){
-                //     res.json({ msg: FAIL });
-                //     return;
-                // }
-                // res.json({ msg : SUCCESS  });
-                res.redirect("/");
+                if(err){
+                    res.json({ msg: FAIL });
+                    return;
+                }
+                res.json({ msg : SUCCESS  });
+                // res.redirect("/");
             })
         }
     }); 
     
     
 });
+
+// 로그아웃
+routes.post('/logout', (req, res) => {
+    
+    delete req.session.user;
+    res.redirect('/');
+});
+
 
 // checkToken
 routes.get('/checkToken', withAuth, function(req, res) {
