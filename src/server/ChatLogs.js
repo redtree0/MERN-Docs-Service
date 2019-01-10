@@ -17,7 +17,8 @@ class ChatLogs {
         // console.log("new msg " + userTochat.get( key ));
         // console.log("new msg value " + value);
         let newChat = self.userTochat.get( key );
-        !newChat ? null : newChat.push(value) && self.userTochat.set( key , newChat );
+		newChat.push(value);
+        !newChat ? null :  self.userTochat.set( key , newChat );
     }
     
     initKey(key) {
@@ -44,11 +45,15 @@ class ChatLogs {
             'time' : getTime( new Date()),
             'timestamp' : new Date()
         }
-        // mongoose insert 
-        if( to === BROADCAST) {
-            this.pushByKey(BROADCAST, newmsg);
-        }
-        this.pushByKey(from, newmsg);
+        // // mongoose insert 
+        // if( to === BROADCAST) {
+        //     this.pushByKey(BROADCAST, newmsg);
+        // }
+		console.log(newmsg);
+        this.pushByKey(from, newmsg);        
+		this.pushByKey(to, newmsg);
+
+
 
         return newmsg; 
     }
