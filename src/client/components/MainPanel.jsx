@@ -17,7 +17,7 @@ class MainPanel extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            endpoint: "http://localhost:8080",
+            endpoint: "http://merndocsexpress.run.goorm.io",   //         endpoint: "http://localhost:8080",
             socket : null,
             user : null,
         };
