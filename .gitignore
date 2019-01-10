@@ -26,3 +26,7 @@ yarn-error.log*
 selenium-server.log
 tests/reports/*
 tests/results/*
+
+*.zip
+*.tar
+decompress

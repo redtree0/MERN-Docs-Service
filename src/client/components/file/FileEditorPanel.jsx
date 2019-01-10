@@ -28,26 +28,6 @@ class FileEditorPanel extends Component {
         // this.readFile();
     }
 
-    // updateEditorValue(value){
-    //     this.setState({ value : value });
-    // }
-
-    // readFile(path){
-    //     // path;
-    //     console.log("Called ReadFile");
-
-    //     const { socket } = this.props;
-    //     const file = "/Users/computer/dev/mern-docs-service/src/server/ChatLogs.js";
-    //     socket.emit("READFILE", file);
-    //     socket.on("READBUFFER", (file)=>{
-    //         // console.log("READBUFFER");
-    //         // console.log(JSON.stringify(file));
-    //         // console.log((file).context);
-    //         let context = file.context;
-    //         this.updateEditorValue(context);
-    //     });
-    // }
-
     onChange(newValue) {
         const { onChangeContext } = this.props;
         onChangeContext(newValue);
@@ -58,22 +38,22 @@ class FileEditorPanel extends Component {
         const { context } = this.props;
         return (
             <AceEditor
-            mode="javascript"
-            // theme="monokai"
-            name="blah2"
-            onLoad={this.onLoad}
-            onChange={this.onChange}
-            fontSize={14}
-            showPrintMargin={true}
-            showGutter={true}
-            highlightActiveLine={true}
-            value={ context }
-            setOptions={{
-            enableBasicAutocompletion: false,
-            enableLiveAutocompletion: true,
-            enableSnippets: false,
-            showLineNumbers: true,
-            tabSize: 2,
+                mode="javascript"
+                // theme="monokai"
+                name="blah2"
+                onLoad={this.onLoad}
+                onChange={this.onChange}
+                fontSize={14}
+                showPrintMargin={true}
+                showGutter={true}
+                highlightActiveLine={true}
+                value={ context }
+                setOptions={{
+                enableBasicAutocompletion: false,
+                enableLiveAutocompletion: true,
+                enableSnippets: false,
+                showLineNumbers: true,
+                tabSize: 2,
             }}/>
         )
     }

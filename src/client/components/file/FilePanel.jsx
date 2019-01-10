@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import axios from 'axios';
 import FileEditorPanel from './FileEditorPanel.jsx';
 import FileUploadPanel from './FileUploadPanel.jsx';
 import FileTreePanel from './FileTreePanel.jsx';
@@ -9,17 +10,19 @@ import { READFILE,  READBUFFER , WRITEFILE } from '../../../common/Events.js';
 class FilePanel extends Component {
 
     constructor(props) {
-        console.log("Loaded FilePanel");
+        // console.log("Loaded FilePanel");
         super(props);
 
         this.state = {
             chatlog : [],
             context : "",
             path : "",
+            tree : null,
         }; 
         this.readFile = this.readFile.bind(this);
         this.writeFile = this.writeFile.bind(this);
         this.onChangeContext = this.onChangeContext.bind(this);
+        this.loadDirectoryTree = this.loadDirectoryTree.bind(this);
     }
 
     componentDidMount() {
@@ -66,7 +69,6 @@ class FilePanel extends Component {
         const { socket } = this.props;
         const { context } = this.state;
         const { path } = this.state;
-        console.log("Context ${context}");
         
         let blob = new Blob([context], {type: "text/plain"});
         
@@ -89,20 +91,32 @@ class FilePanel extends Component {
 
     }
 
+    loadDirectoryTree(){
+        console.log("loadDirectoryTree");
+        return axios.get('/file/test')
+                .then((res)=>{
+                    console.log(res.data);
+                    this.setState({ tree : res.data})
+                    // return res.data;
+                })  
+    }
+
     render(){
         const { socket } = this.props;
         const { context } = this.state;
+        const { tree } = this.state; 
+
         return (
             <div>
                 <div>
                     <Button color="primary" onClick = { this.writeFile } > Save </Button>
                 </div>
                 <Row>
-                    <Col xs="3"><FileTreePanel onClickNode = { this.readFile } ></FileTreePanel></Col>
+                    <Col xs="3"><FileTreePanel tree = { tree } onLoaded = {  this.loadDirectoryTree } onClickNode = { this.readFile } ></FileTreePanel></Col>
                     <Col xs="9"><FileEditorPanel socket = { socket } context = { context } onChangeContext = { this.onChangeContext }></FileEditorPanel></Col>
                 </Row>
                 <div>
-                    <FileUploadPanel></FileUploadPanel>
+                    <FileUploadPanel onUploaded = { this.loadDirectoryTree }  ></FileUploadPanel>
                 </div>
             </div>
         )

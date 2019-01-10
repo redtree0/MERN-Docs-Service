@@ -28,7 +28,7 @@ db.once('open', function(){
     console.log("Connected to mongod server");
 });
 
-mongoose.connect('mongodb://localhost/mern');
+mongoose.connect('mongodb://localhost/mern',  { useNewUrlParser: true });
 
 // app.use(session({
 //     secret: '@#@$MYSIGN#@$#$',
@@ -40,9 +40,6 @@ app.use(express.json()) // bodyparser;
 app.use(express.static(path.resolve(process.cwd(), 'public')))
 app.use(fileUpload());
 
-app.get('/api', (req, res) => {
-    res.send('Express to the rescue!');
-});
 
 app.use('/', user );
 app.use('/', index );

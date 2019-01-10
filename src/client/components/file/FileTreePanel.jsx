@@ -6,33 +6,21 @@ class FilePanel extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            data : '',
-            loading : 'initial'
+            // data : '',
         };
         this.onToggle = this.onToggle.bind(this);
     }
 
-    loadData(){
-        return axios.get('/file/test')
-        .then((res)=>{
-            console.log(res);
-            return res.data;
-        })  
-    }
-   
     componentDidMount() {
 
-        console.log('This happens 3rd.');
-    
-        this.setState({ loading: 'true' });
-        this.loadData()
-        .then((data) => {
-          console.log('This happens 7th.');
-          this.setState({
-            data: data,
-            loading: 'false'
-          });
-        });
+        const { onLoaded } = this.props;
+        onLoaded();
+        // .then((data) => {
+        //     this.setState({
+        //         data: data,
+        //         loading: 'false'
+        //     });
+        // });
       }  
   
     onToggle(node, toggled){
@@ -48,14 +36,19 @@ class FilePanel extends React.Component {
         this.setState({ cursor: node });
     }
     render(){
+        // const { tree } = this.props;
         return (
             <div>
-
-                <Treebeard
-                    data={this.state.data}
-                    onToggle={this.onToggle}
-                />
-
+                {
+                    !this.props.tree
+                    ?
+                    <div></div>
+                    :
+                    <Treebeard
+                        data={ this.props.tree }
+                        onToggle={this.onToggle}
+                    />
+                }
             </div>
 
         );
