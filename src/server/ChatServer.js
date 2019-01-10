@@ -77,6 +77,7 @@ function verifyEventHandler(){
             self.socket.handshake.session.user = {
                 name : name
             };
+            ChatServer.chatlogs.remove(self.socket.name);
         } 
         ChatServer.userTosocketid.set(name, self.socket.id);
         self.load();
@@ -108,9 +109,7 @@ function whisperEventHandler(){
         console.log("name " + self.socket.name);
         let from = self.socket.name;
         let chatmsg = ChatServer.chatlogs.newMessage(from, to, data);
-        if(self.socket.handshake.session.user){
-            console.log("chhdsfdsfew");
-        }
+        
         let socketid = ChatServer.userTosocketid.get(to);
         self.socket.to(socketid).emit(CHATLOG, chatmsg );
         callback(chatmsg);

@@ -65,16 +65,9 @@ class LoginForm extends Component {
     // axios.post('/authenticate', params)
     axios.post('/login', params)
       .then(res => {
-        // if (res.status === 200) {
-        //   this.setUser(this.state.requestID);
-        // //   console.log(res.status);
-        // //   console.log(res);
-        // //   this.props.history.push('/');
-        // //   this.setUser(this.state.requestID);
-        // }
-        // // console.log(res);
+       
         if(res.data.msg === "SUCCESS") {
-          console.log(this.state.requestID);
+          // console.log(this.state.requestID);
           this.setUser(this.state.requestID);
         } else {
           this.setUser(null);

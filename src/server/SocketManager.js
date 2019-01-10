@@ -1,6 +1,4 @@
 import { io } from './index.js';
-import { SEND_MESSAGE , VERIFY, CHATLOG} from '../common/Events.js';
-import { createMessage } from '../common/Factory.js';
 import { ChatServer } from './ChatServer.js'; 
 import { FileEditor } from './FileEditor.js'; 
 
@@ -20,4 +18,11 @@ module.exports = function(socket, Chat){
     fileEditor.read();
     fileEditor.write();
       
+    socket.on("CHECK_SESSION", (data, callback)=>{
+        if(socket.handshake.session.user){
+            callback(null, socket.handshake.session.user.name);
+        }else{
+            callback(new Error("NOT FOUND"));
+        }
+    });
 }

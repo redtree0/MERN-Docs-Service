@@ -35,6 +35,11 @@ class MainPanel extends Component {
             this.setState({socket : socket});
 
         });
+        socket.emit("CHECK_SESSION", {}, (err, user)=>{
+            if(!err && user){
+                this.setUser(user);
+            }
+        })
         
     }
 
@@ -54,12 +59,13 @@ class MainPanel extends Component {
     render(){
         const { socket } = this.state;
         const { user } = this.state;
-
+        
         return (
             // <Router>
             <div>
+                <Router>
                 {
-                !user ?
+                (!user) ?
                 <div><LoginForm socket={socket} setUser={this.setUser} ></LoginForm></div>
                 :
                 <div>
@@ -73,19 +79,20 @@ class MainPanel extends Component {
 
                         <SidebarPanel />
 
-                        <Router>
+                        
                             <div style={{ flex: 1, padding: "10px" }}>
                             <h2>{ this.state.endpoint }</h2>
                             <Route exact path="/home" render={(props) => <ChatPanel {...props} socket={socket} user={ user } /> }/>
                             {/* <Route exact path="/home" component={ChatPanel} socket={socket} /> */}
-                            <Route  path="/file"  render={(props) => <FilePanel {...props} socket={socket} user={ user } /> }/>
+                            <Route  path="/file" render={(props) => <FilePanel {...props} socket={socket} user={ user }  /> }/>
                             </div>
-                        </Router>
+                        
 
                     </div>
                 
                 </div>
                 }
+                </Router>
             </div>
 
         );

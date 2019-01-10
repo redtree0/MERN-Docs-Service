@@ -22,14 +22,17 @@ class ChatLogs {
     
     initKey(key) {
         let self = this;
+
+        let flag = true;
         if(self.userTochat.get(key)){
+            flag = false;
         }else {
             self.userTochat.set( key, new Array() );
+            flag = true;
         }
         // console.log("initKey " +  ( key ));
         // console.log(self.userTochat);
-
-        return key;
+        return flag;
     }
 
     newMessage(from, to, msg) {

@@ -53,9 +53,9 @@ routes.post('/addUser', (req, res) => {
 
 // 로그아웃
 routes.post('/logout', (req, res) => {
-    
+    console.log("Logout");
     delete req.session.user;
-    res.redirect('/');
+    res.json({ status : 200 });
 });
 
 

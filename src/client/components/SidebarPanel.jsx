@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
   BrowserRouter as Router,
   Route,
+  Link,
 } from "react-router-dom";
 
 import {
@@ -28,6 +29,7 @@ export default function SidebarPanel() {
                     <NavLink to="{Link}" href="/home">Components</NavLink>
                 </NavItem>
                 <NavItem>
+                    {/* <NavLink to="/file">About</NavLink> */}
                     <NavLink to="{Link}" href="/file">About</NavLink>
                 </NavItem>
             </Nav>
