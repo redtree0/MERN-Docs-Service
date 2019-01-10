@@ -19,7 +19,7 @@ module.exports = {
     entry: [
       'babel-polyfill',
       'react-hot-loader/patch',
-      'Reactstrap',
+      'reactstrap',
       paths.entryClient
     ],
     output: {
