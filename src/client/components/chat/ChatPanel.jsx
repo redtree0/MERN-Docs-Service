@@ -48,13 +48,7 @@ class ChatPanel extends Component {
 		const { chats } = this.state
 
 		const newChats = reset ? [chat] : [...chats, chat]
-		// this.setState({chats:newChats, activeChat:reset ? chat : this.state.activeChat})
-
-		// const messageEvent = `${MESSAGE_RECIEVED}-${chat.id}`
-		// const typingEvent = `${TYPING}-${chat.id}`
-
-		// socket.on(typingEvent, this.updateTypingInChat(chat.id))
-		// socket.on(messageEvent, this.addMessageToChat(chat.id))
+	
     }
     
     sendMessage(options, message){

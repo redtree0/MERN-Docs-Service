@@ -2,6 +2,7 @@ import express from 'express';
 import User from '../models/user.js';
 import withAuth from '../helpers/middleware.js';
 import { SUCCESS, FAIL } from '../../common/Events.js';
+import jwt from 'jsonwebtoken';
 
 let routes = express.Router();
 
@@ -9,7 +10,7 @@ let routes = express.Router();
 routes.post('/login', (req, res) => {
     console.log(req.body);
     let userId = req.body.userId;
-    User.findOne({ id: req.body.userId, password : req.body.passwd }, function(err, user){
+    User.findOne({ id: req.body.userId }, function(err, user){
         console.log(err);
         console.log(user);
         if(err || user === null) return res.json({ msg : FAIL  });
@@ -49,10 +50,11 @@ routes.post('/addUser', (req, res) => {
 routes.get('/checkToken', withAuth, function(req, res) {
     res.sendStatus(200);
 });
-
+const secret = '@#@$MYSIGN#@$#$';
 // authenticate
 routes.post('/authenticate', function(req, res) {
     let userId = req.body.userId;
+    let password = req.body.passwd;
     User.findOne({ id: userId}, function(err, user){
         
         if(err || user === null) return res.status(500).json({ msg : FAIL  });
@@ -64,7 +66,7 @@ routes.post('/authenticate', function(req, res) {
                         error: 'Internal error please try again'
                     });
                 }else {
-                    const payload = userId;
+                    const payload = { userId };
                     const token = jwt.sign(payload, secret, {
                       expiresIn: '1h'
                     });

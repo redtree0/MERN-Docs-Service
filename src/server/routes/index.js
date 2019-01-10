@@ -15,7 +15,7 @@ import { ROOT_PATH } from '../../config';
     routes.get('/file/:path', function (req, res) {
         const dirTree = require("directory-tree");
 
-        const tree = dirTree(path.join(__dirname, ".."), {attributes:[ 'ino']});
+        const tree = dirTree(path.join(ROOT_PATH), {attributes:[ 'ino']});
         res.json(tree);
     });
 

@@ -62,18 +62,21 @@ class LoginForm extends Component {
     } ;
 
     console.log(params);
-    axios.post('/authenticate', params)
-    // axios.post('/login', params)
+    // axios.post('/authenticate', params)
+    axios.post('/login', params)
       .then(res => {
-        if (res.status === 200) {
-          this.props.history.push('/');
-        }
-        // console.log(res);
-        // if(res.data.msg === "SUCCESS") {
+        // if (res.status === 200) {
+        //   console.log(res.status);
+        //   console.log(res);
+        //   this.props.history.push('/');
         //   this.setUser(this.state.requestID);
-        // } else {
-        //   this.setUser(null);
         // }
+        // console.log(res);
+        if(res.data.msg === "SUCCESS") {
+          this.setUser(this.state.requestID);
+        } else {
+          this.setUser(null);
+        }
         
       })
       .catch( err => {

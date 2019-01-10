@@ -8,3 +8,4 @@ decompress('../../data/tar/sampleTarFile.tar', '.', {
 }).then(() => {
     console.log('Files decompressed');
 });
+

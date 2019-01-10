@@ -25,10 +25,10 @@ export default function SidebarPanel() {
             >
             <Nav className="ml-auto" navbar>
                 <NavItem>
-                <NavLink to="{Link}" href="/home">Components</NavLink>
+                    <NavLink to="{Link}" href="/home">Components</NavLink>
                 </NavItem>
                 <NavItem>
-                <NavLink to="{Link}" href="/about">About</NavLink>
+                    <NavLink to="{Link}" href="/file">About</NavLink>
                 </NavItem>
             </Nav>
             
