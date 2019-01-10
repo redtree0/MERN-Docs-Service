@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
+import PropTypes from 'prop-types';
 import brace from 'brace';
 import AceEditor from 'react-ace';
-import ss from 'socket.io-stream';
 import 'brace/mode/java';
 import 'brace/theme/github';
 
@@ -58,6 +57,12 @@ class FileEditorPanel extends Component {
         )
     }
 
+}
+
+FileEditorPanel.PropTypes = {
+    socket : PropTypes.object,
+    context : PropTypes.string,
+    onChangeContext : PropTypes.func
 }
 
 export default FileEditorPanel;

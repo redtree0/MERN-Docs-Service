@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from 'axios';
 import FileEditorPanel from './FileEditorPanel.jsx';
@@ -121,6 +122,11 @@ class FilePanel extends Component {
             </div>
         )
     }
+}
+
+FilePanel.PropTypes = {
+    socket : PropTypes.object,
+    uesr : PropTypes.string,
 }
 
 export default FilePanel;

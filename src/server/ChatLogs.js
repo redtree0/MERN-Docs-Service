@@ -9,7 +9,7 @@ class ChatLogs {
     }
     
     getChatLogs(user){
-        return this.userTochat.get(user);
+        return this.userTochat.get(user) ? this.userTochat.get(user) : new Array();
     }
     pushByKey(key, value) {
         let self = this;
@@ -37,8 +37,6 @@ class ChatLogs {
 
     newMessage(from, to, msg) {
         
-        
-
         let newmsg = {
             'from' : from ,
             'to' : to,
@@ -46,7 +44,6 @@ class ChatLogs {
             'time' : getTime( new Date()),
             'timestamp' : new Date()
         }
-        
         // mongoose insert 
         if( to === BROADCAST) {
             this.pushByKey(BROADCAST, newmsg);

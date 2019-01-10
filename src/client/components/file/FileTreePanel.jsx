@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import axios from "axios";                                                
 import {Treebeard} from 'react-treebeard';
   
@@ -53,6 +54,11 @@ class FilePanel extends React.Component {
 
         );
     }
+}
+
+FilePanel.PropTypes = {
+    tree : PropTypes.object,
+    onClickNode : PropTypes.func,
 }
 
 export default FilePanel;

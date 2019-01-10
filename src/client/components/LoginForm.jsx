@@ -125,7 +125,8 @@ class LoginForm extends Component {
 }
 
 LoginForm.propTypes={
-    // onSuccess: PropTypes.function,
+  socket: PropTypes.object,
+  setUser : PropTypes.string,
 };
 
 export default LoginForm;

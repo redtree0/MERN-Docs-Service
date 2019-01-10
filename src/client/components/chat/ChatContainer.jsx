@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import {  Card, CardTitle, CardBody, CardText, CardFooter } from 'reactstrap';
+import PropTypes from 'prop-types';
+import {  Card,  CardText } from 'reactstrap';
 
 export default class ChatContainer extends Component {
     
     render() {
-            console.log("In ChatContainer");
-            console.log(this.props);
+            // console.log("In ChatContainer");
+            // console.log(this.props);
             let background = "primary";
             let pos = "right";
             let test = "outline";
@@ -40,4 +41,12 @@ export default class ChatContainer extends Component {
 
             )
         } 
+}
+
+ChatContainer.PropTypes = {
+    from : PropTypes.string,
+    to : PropTypes.string,
+    username : PropTypes.string,
+    message : PropTypes.string,
+    time : PropTypes.time,
 }

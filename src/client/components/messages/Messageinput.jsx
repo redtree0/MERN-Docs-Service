@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import {  Input, Container, Row, Col, Card, CardTitle, CardBody, CardText, CardFooter,  Button, Text, Alert } from 'reactstrap';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import {  Input, Container, Row, Col, Button } from 'reactstrap';
 import UserDropbox from './UserDropbox.jsx';
 import { BROADCAST, WHISPER } from '../../../common/Events.js';
 
@@ -67,7 +68,7 @@ class MessageInput extends Component {
 }
 
 MessageInput.PropTypes = {
-
+    sendMessage : PropTypes.func,
 }
 
 export default MessageInput;

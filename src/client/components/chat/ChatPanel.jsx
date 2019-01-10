@@ -1,10 +1,9 @@
-import React, { Component, PropTypes } from 'react';
-import {  Input, Container, Row, Col, Card, CardTitle, CardBody, CardText, CardFooter,  Button, Text, Alert } from 'reactstrap';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import {  Container, Row, Col } from 'reactstrap';
 import ChatContainer from './ChatContainer.jsx'
 import Messageinput from '../messages/Messageinput.jsx'
 import { SEND_MESSAGE, VERIFY , CHATLOG, LOAD_MESSAGE } from '../../../common/Events.js'
-
-const EMPTY = null;
 
 class ChatPanel extends Component {
 
@@ -22,9 +21,7 @@ class ChatPanel extends Component {
         console.log("componentDidMount");
         // console.log(this.props);
         const { socket } = this.props;
-        // const { user } = this.props;
-        // socket.emit("RESET", this.resetChat);
-        // socket.emit(VERIFY, user);
+
         socket.emit(LOAD_MESSAGE, {},(data)=>{
             console.log(LOAD_MESSAGE);
             console.log(data.chatlogs);
@@ -38,10 +35,6 @@ class ChatPanel extends Component {
         });
         // console.log(socket);
     }
-
-    // resetChat = (chat)=>{
-	// 	return this.addChat(chat, true)
-    // }
     
     updateChatlog(chat){
         console.log("in update func");
@@ -69,12 +62,10 @@ class ChatPanel extends Component {
         });
        
     }
-  
-
 
     render() {
         const { user }  = this.props;   
-        // console.log(user);
+       
         return (
             <div>
                 <Container>
@@ -103,9 +94,10 @@ class ChatPanel extends Component {
     }
 }
 
-// ChatPanel.propTypes={
-//     Socket: PropTypes.object.isRequired,
-// };
+ChatPanel.propTypes={
+    socket: PropTypes.object,
+    user : PropTypes.string,
+};
 
 export default ChatPanel;
 

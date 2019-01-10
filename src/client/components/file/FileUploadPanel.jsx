@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 import axios, { post } from 'axios';
 
 class FileUploadPanel extends Component {
@@ -56,4 +57,10 @@ class FileUploadPanel extends Component {
         )
     }
 }
+
+FileUploadPanel.PropTypes = {
+    socket : PropTypes.object,
+    onUploaded : PropTypes.func
+}
+
 export default FileUploadPanel

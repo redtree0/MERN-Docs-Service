@@ -77,7 +77,6 @@ function verifyEventHandler(){
             self.socket.handshake.session.user = {
                 name : name
             };
-            ChatServer.chatlogs.remove(self.socket.name);
         } 
         ChatServer.userTosocketid.set(name, self.socket.id);
         self.load();
